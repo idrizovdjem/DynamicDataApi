@@ -1,14 +1,15 @@
-using DynamicData.Web.Data;
-using DynamicData.Web.Models.Token;
-using DynamicData.Web.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using DynamicData.Data;
+using DynamicData.Services;
+using DynamicData.DTOs.Token;
+using DynamicData.Services.Contracts;
 
 namespace DynamicData.Web
 {

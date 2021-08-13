@@ -1,8 +1,8 @@
-﻿using DynamicData.Web.Models.Token;
-using DynamicData.Web.Models.User;
-using DynamicData.Web.Services;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using DynamicData.DTOs.User;
+using DynamicData.DTOs.Token;
+using DynamicData.Services.Contracts;
 
 namespace DynamicData.Web.Controllers
 {
