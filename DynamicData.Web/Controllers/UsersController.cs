@@ -8,7 +8,7 @@ namespace DynamicData.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class UsersController : Controller
+    public class UsersController : ControllerBase
     {
         private readonly IUsersService usersService;
         private readonly IUtilitiesService utilitiesService;
@@ -22,7 +22,7 @@ namespace DynamicData.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(UserRegisterInputModel input)
+        public async Task<ResponseModel> Register(UserRegisterInputModel input)
         {
             var response = new ResponseModel();
             if (!ModelState.IsValid)
@@ -32,8 +32,9 @@ namespace DynamicData.Web.Controllers
                 {
                     response.AddErrorMessage(message);
                 }
+
                 response.StatusCode = 400;
-                return Json(response);
+                return response;
             }
 
             var isEmailAvailable = this.usersService.IsEmailAvailable(input.Email);
@@ -42,7 +43,7 @@ namespace DynamicData.Web.Controllers
             {
                 response.AddErrorMessage("This email is already taken");
                 response.StatusCode = 400;
-                return Json(response);
+                return response;
             }
 
             var isUsernameAvailable = this.usersService.IsUsernameAvailable(input.Username);
@@ -51,19 +52,19 @@ namespace DynamicData.Web.Controllers
             {
                 response.AddErrorMessage("This username is already taken");
                 response.StatusCode = 400;
-                return Json(response);
+                return response;
             }
 
             var user = await this.usersService.RegisterAsync(input);
             var tokens = await this.tokenAuthService.GenerateTokensAsync(user);
 
             response.Data = tokens;
-            return Json(response);
+            return response;
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserLoginInputModel input)
+        public async Task<ResponseModel> Login(UserLoginInputModel input)
         {
             var response = new ResponseModel();
             if (!ModelState.IsValid)
@@ -73,8 +74,9 @@ namespace DynamicData.Web.Controllers
                 {
                     response.AddErrorMessage(message);
                 }
+
                 response.StatusCode = 400;
-                return Json(response);
+                return response;
             }
 
             var user = this.usersService.Login(input);
@@ -82,12 +84,12 @@ namespace DynamicData.Web.Controllers
             {
                 response.AddErrorMessage("Invalid login information");
                 response.StatusCode = 401;
-                return Json(response);
+                return response;
             }
 
             var tokens = await this.tokenAuthService.GenerateTokensAsync(user);
             response.Data = tokens;
-            return Json(response);
+            return response;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace DynamicData.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class TokenController : Controller
+    public class TokenController : ControllerBase
     {
         private readonly IUtilitiesService utilitiesService;
         private readonly ITokenService tokenService;
@@ -22,7 +22,7 @@ namespace DynamicData.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Refresh(RefreshTokenInputModel input)
+        public async Task<ResponseModel> OnGetAsync(RefreshTokenInputModel input)
         {
             var response = new ResponseModel();
 
@@ -31,7 +31,7 @@ namespace DynamicData.Web.Controllers
             {
                 response.AddErrorMessage("Missing access token header");
                 response.StatusCode = 400;
-                return Json(response);
+                return response;
             }
 
             var accessToken = this.tokenService.GetAccessToken(headerToken, input.RefreshToken);
@@ -39,21 +39,21 @@ namespace DynamicData.Web.Controllers
             {
                 response.AddErrorMessage("Invalid refresh token");
                 response.StatusCode = 400;
-                return Json(response);
+                return response;
             }
 
             if (accessToken.RefreshExpirationDate < DateTime.UtcNow)
             {
                 response.AddErrorMessage("Refresh token expired");
                 response.StatusCode = 400;
-                return Json(response);
+                return response;
             }
-            var user = this.usersService.GetById(accessToken.UserId);
 
+            var user = this.usersService.GetById(accessToken.UserId);
             var tokens = await this.tokenService.GenerateTokensAsync(user);
 
             response.Data = tokens;
-            return Json(response);
+            return response;
         }
     }
 }
