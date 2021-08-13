@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using DynamicData.Services.Application.Contracts;
+using DynamicData.Services.Common.Contracts;
 
-namespace DynamicData.Services
+namespace DynamicData.Services.Common
 {
     public class UtilitiesService : IUtilitiesService
     {
+        private const byte BEARER_LENGTH = 7;
+
         public string HashPassword(string password)
         {
             using SHA512 sha512Hash = SHA512.Create();
@@ -41,16 +43,13 @@ namespace DynamicData.Services
                 return null;
             }
 
-            // get the header value
             var rawToken = httpContext.Request.Headers["authorization"].ToString();
-
             if (rawToken == "Bearer")
             {
                 return null;
             }
 
-            // remove "Bearer " from the token
-            var accessToken = rawToken.Substring(7);
+            var accessToken = rawToken.Substring(BEARER_LENGTH);
             return accessToken;
         }
     }

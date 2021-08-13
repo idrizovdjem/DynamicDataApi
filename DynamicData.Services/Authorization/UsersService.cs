@@ -3,9 +3,10 @@ using System.Threading.Tasks;
 using DynamicData.Data;
 using DynamicData.DTOs.User;
 using DynamicData.Data.Models;
-using DynamicData.Services.Application.Contracts;
+using DynamicData.Services.Common.Contracts;
+using DynamicData.Services.Authorization.Contracts;
 
-namespace DynamicData.Services
+namespace DynamicData.Services.Authorization
 {
     public class UsersService : IUsersService
     {

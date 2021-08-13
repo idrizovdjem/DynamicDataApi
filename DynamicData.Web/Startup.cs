@@ -7,10 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DynamicData.Data;
-using DynamicData.Services;
 using DynamicData.DTOs.Token;
+using DynamicData.Services.Common;
 using DynamicData.Services.Application;
+using DynamicData.Services.Authorization;
+using DynamicData.Services.Common.Contracts;
 using DynamicData.Services.Application.Contracts;
+using DynamicData.Services.Authorization.Contracts;
 
 namespace DynamicData.Web
 {
@@ -59,6 +62,8 @@ namespace DynamicData.Web
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IUtilitiesService, UtilitiesService>();
             services.AddTransient<ITablesService, TablesService>();
+            services.AddTransient<IColumnsService, ColumnsService>();
+            services.AddTransient<ISqlQueryService, SqlQueryService>();
 
             services.AddControllers();
         }

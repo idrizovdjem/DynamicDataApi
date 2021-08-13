@@ -9,9 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using DynamicData.Data;
 using DynamicData.DTOs.Token;
 using DynamicData.Data.Models;
-using DynamicData.Services.Application.Contracts;
+using DynamicData.Services.Authorization.Contracts;
 
-namespace DynamicData.Services
+namespace DynamicData.Services.Authorization
 {
     public class TokenService : ITokenService
     {
@@ -79,7 +79,7 @@ namespace DynamicData.Services
         {
             var claims = new[]
             {
-                new Claim("id", user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Email)
             };
 

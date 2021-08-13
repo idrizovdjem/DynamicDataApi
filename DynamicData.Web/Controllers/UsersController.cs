@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using DynamicData.DTOs.User;
 using DynamicData.DTOs.Token;
-using DynamicData.Services.Application.Contracts;
+using DynamicData.Services.Common.Contracts;
+using DynamicData.Services.Authorization.Contracts;
 
 namespace DynamicData.Web.Controllers
 {

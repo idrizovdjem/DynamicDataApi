@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DynamicData.DTOs.Token;
-using DynamicData.Services.Application.Contracts;
+using DynamicData.Services.Common.Contracts;
+using DynamicData.Services.Authorization.Contracts;
 
 namespace DynamicData.Web.Controllers
 {

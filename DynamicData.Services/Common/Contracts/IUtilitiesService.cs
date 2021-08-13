@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DynamicData.Services.Application.Contracts
+namespace DynamicData.Services.Common.Contracts
 {
     public interface IUtilitiesService
     {
