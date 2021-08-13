@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using DynamicData.Data;
 using DynamicData.DTOs.Token;
 using DynamicData.Data.Models;
-using DynamicData.Services.Contracts;
+using DynamicData.Services.Application.Contracts;
 
 namespace DynamicData.Services
 {

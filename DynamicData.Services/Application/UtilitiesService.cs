@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using DynamicData.Services.Contracts;
+using DynamicData.Services.Application.Contracts;
 
 namespace DynamicData.Services
 {

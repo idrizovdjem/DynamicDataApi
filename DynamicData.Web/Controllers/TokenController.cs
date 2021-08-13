@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DynamicData.DTOs.Token;
-using DynamicData.Services.Contracts;
+using DynamicData.Services.Application.Contracts;
 
 namespace DynamicData.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     public class TokenController : Controller
     {
         private readonly IUtilitiesService utilitiesService;

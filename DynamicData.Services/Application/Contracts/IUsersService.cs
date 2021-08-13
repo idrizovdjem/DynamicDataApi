@@ -2,7 +2,7 @@
 using DynamicData.DTOs.User;
 using DynamicData.Data.Models;
 
-namespace DynamicData.Services.Contracts
+namespace DynamicData.Services.Application.Contracts
 {
     public interface IUsersService
     {

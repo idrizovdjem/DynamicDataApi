@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using DynamicData.DTOs.User;
 using DynamicData.DTOs.Token;
-using DynamicData.Services.Contracts;
+using DynamicData.Services.Application.Contracts;
 
 namespace DynamicData.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;

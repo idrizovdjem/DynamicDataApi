@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DynamicData.Data;
 using DynamicData.Services;
 using DynamicData.DTOs.Token;
-using DynamicData.Services.Contracts;
+using DynamicData.Services.Application;
+using DynamicData.Services.Application.Contracts;
 
 namespace DynamicData.Web
 {
@@ -57,6 +58,8 @@ namespace DynamicData.Web
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IUtilitiesService, UtilitiesService>();
+            services.AddTransient<ITablesService, TablesService>();
+
             services.AddControllers();
         }
 
