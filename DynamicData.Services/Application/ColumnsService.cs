@@ -1,6 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using DynamicData.Data;
 using DynamicData.DTOs.Column;
 using DynamicData.Common.Enums;
 using DynamicData.Services.Application.Contracts;
@@ -9,6 +14,13 @@ namespace DynamicData.Services.Application
 {
     public class ColumnsService : IColumnsService
     {
+        private readonly ApplicationDbContext context;
+
+        public ColumnsService(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
+
         public void ProccessIdentifier(List<CreateColumnInputModel> columns, string tableName)
         {
             var identifierColumn = columns
@@ -67,7 +79,7 @@ namespace DynamicData.Services.Application
                     continue;
                 }
 
-                var columnType = ConvertColumnType(column.Type);
+                var columnType = ConvertColumnTypeToSql(column.Type);
                 var canBeNull = column.IsRequired ? "NOT NULL" : string.Empty;
                 var canBeUnique = column.IsUnique ? "UNIQUE" : string.Empty;
 
@@ -75,6 +87,33 @@ namespace DynamicData.Services.Application
             }
 
             return queryBuilder.ToString();
+        }
+
+        public async Task<CreateColumnInputModel[]> GetTableColumnsAsync(string tableName, string userId)
+        {
+            var tableColumns = await this.context.TableRecords
+                .Where(tr => tr.Name == tableName && tr.CreatorId == userId && tr.IsDeleted == false)
+                .Select(tr => tr.Columns)
+                .FirstOrDefaultAsync();
+
+            if(string.IsNullOrWhiteSpace(tableColumns))
+            {
+                return Array.Empty<CreateColumnInputModel>();
+            }
+
+            return (CreateColumnInputModel[])JsonSerializer.Deserialize(tableColumns, typeof(CreateColumnInputModel[]));
+        }
+
+        public Type ConvertColumnType(ColumnType type)
+        {
+            return type switch
+            {
+                ColumnType.Text => typeof(string),
+                ColumnType.Integer => typeof(int),
+                ColumnType.Boolean => typeof(bool),
+                ColumnType.Decimal => typeof(decimal),
+                _ => typeof(string)
+            };
         }
 
         private static CreateColumnInputModel AddIdentifierColumn(List<CreateColumnInputModel> columns)
@@ -91,7 +130,7 @@ namespace DynamicData.Services.Application
             return identifierColumn;
         }
 
-        private static string ConvertColumnType(ColumnType type)
+        private static string ConvertColumnTypeToSql(ColumnType type)
         {
             return type switch
             {

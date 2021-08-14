@@ -29,7 +29,7 @@ namespace DynamicData.Services.Application
         {
             var tableRecord = new TableRecord()
             {
-                InternalName = input.Name + userId,
+                InternalName = input.Name + userId.Replace("-", ""),
                 Name = input.Name,
                 CreatorId = userId,
                 CreatedOn = DateTime.UtcNow,
@@ -97,15 +97,15 @@ namespace DynamicData.Services.Application
             };
         }
 
-        public Task<bool> IsNameUniqueAsync(string tableName, string userId)
-        {
-            return this.context.TableRecords
-                .AllAsync(tr => tr.InternalName != tableName + userId);
-        }
-
         public bool NameContainsInvalidCharacters(string tableName)
         {
             return tableName.Any(letter => char.IsLetter(letter) == false);
+        }
+
+        public async Task<bool> TableExistsAsync(string tableName, string userId)
+        {
+            return await this.context.TableRecords
+                .AnyAsync(tr => tr.Name == tableName && tr.CreatorId == userId && tr.IsDeleted == false);
         }
     }
 }

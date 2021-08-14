@@ -64,6 +64,7 @@ namespace DynamicData.Web
             services.AddTransient<ITablesService, TablesService>();
             services.AddTransient<IColumnsService, ColumnsService>();
             services.AddTransient<ISqlQueryService, SqlQueryService>();
+            services.AddTransient<IRecordsService, RecordsService>();
 
             services.AddControllers();
         }

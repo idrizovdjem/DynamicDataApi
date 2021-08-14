@@ -33,6 +33,20 @@ namespace DynamicData.Web.Controllers
             return await this.tablesService.GetAllTablesAsync(userId);
         }
 
+        [HttpGet]
+        [Route("{tableName}")]
+        public async Task<ActionResult> OnGetAsync(string tableName)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var tableRecord = await this.tablesService.GetByNameAsync(tableName, userId);
+            if (tableRecord == null)
+            {
+                return NotFound("No such table!");
+            }
+
+            return Ok(tableRecord);
+        }
+
         [HttpPost]
         public async Task<ActionResult> OnPostAsync(CreateTableInputModel input)
         {
@@ -43,8 +57,8 @@ namespace DynamicData.Web.Controllers
                 return BadRequest("Table name must contain only letters!");
             }
 
-            var isTableNameUnique = await this.tablesService.IsNameUniqueAsync(input.Name, userId);
-            if(isTableNameUnique == false)
+            var tableExists = await this.tablesService.TableExistsAsync(input.Name, userId);
+            if(tableExists == true)
             {
                 return BadRequest("Table name must be unique!");
             }

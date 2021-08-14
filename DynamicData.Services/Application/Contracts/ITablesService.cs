@@ -7,8 +7,6 @@ namespace DynamicData.Services.Application.Contracts
     {
         Task<TableRecordViewModel[]> GetAllTablesAsync(string userId);
 
-        Task<bool> IsNameUniqueAsync(string tableName, string userId);
-
         string GenerateSqlQuery(CreateTableInputModel input, string userId);
 
         Task<TableRecordViewModel> CreateRecordAsync(CreateTableInputModel input, string userId);
@@ -16,5 +14,7 @@ namespace DynamicData.Services.Application.Contracts
         bool NameContainsInvalidCharacters(string tableName);
 
         Task<TableRecordViewModel> GetByNameAsync(string tableName, string userId);
+
+        Task<bool> TableExistsAsync(string tableName, string userId);
     }
 }
