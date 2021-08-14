@@ -13,11 +13,18 @@ namespace DynamicData.Data.Models
 
         [Required]
         [MaxLength(500)]
+        public string InternalName { get; set; }
+
+        [Required]
+        [MaxLength(500)]
         public string Name { get; set; }
 
         [Required]
         public string CreatorId { get; set; }
 
         public ApplicationUser Creator { get; set; }
+
+        [Required]
+        public string Columns { get; set; }
     }
 }

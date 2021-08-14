@@ -11,8 +11,10 @@ namespace DynamicData.Services.Application.Contracts
 
         string GenerateSqlQuery(CreateTableInputModel input, string userId);
 
-        Task CreateRecordAsync(string tableName, string userId);
+        Task<TableRecordViewModel> CreateRecordAsync(CreateTableInputModel input, string userId);
 
         bool NameContainsInvalidCharacters(string tableName);
+
+        Task<TableRecordViewModel> GetByNameAsync(string tableName, string userId);
     }
 }

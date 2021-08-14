@@ -1,4 +1,6 @@
-﻿namespace DynamicData.DTOs.Table
+﻿using DynamicData.DTOs.Column;
+
+namespace DynamicData.DTOs.Table
 {
     public class TableRecordViewModel
     {
@@ -7,5 +9,7 @@
         public string CreatedOn { get; set; }
 
         public string ModifiedOn { get; set; }
+
+        public ColumnViewModel[] Columns { get; set; }
     }
 }

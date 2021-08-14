@@ -57,12 +57,11 @@ namespace DynamicData.Web.Controllers
 
             this.columnsService.ProccessIdentifier(input.Columns, input.Name);
 
-            var tableName = input.Name + userId.Replace("-", string.Empty);
             var createTableSql = this.tablesService.GenerateSqlQuery(input, userId);
             await this.sqlQueryService.CreateTableAsync(createTableSql);
-            await this.tablesService.CreateRecordAsync(tableName, userId);
+            var tableRecord = await this.tablesService.CreateRecordAsync(input, userId);
 
-            return Ok();
+            return Ok(tableRecord);
         }
     }
 }
